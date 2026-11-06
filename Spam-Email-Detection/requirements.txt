@@ -1,0 +1,7 @@
+# Core ML and Data Processing Libraries
+pandas==3.0.3
+numpy>=1.26.0
+scikit-learn==1.8.0
+nltk==3.10.3
+joblib==1.5.3
+
