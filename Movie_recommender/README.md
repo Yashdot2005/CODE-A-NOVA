@@ -1,118 +1,327 @@
-# CODE-A-NOVA Machine Learning Internship
-## Task Level 2(b): Movie Recommendation System
+# 🎬 Movie Recommendation System
+### CODE-A-NOVA | Machine Learning Internship – Level 2(b)
 
-A dual-engine and hybrid movie recommendation system built using the official **MovieLens** dataset. It implements **Content-Based Filtering (TF-IDF + Cosine Similarity)**, **Collaborative Filtering (Matrix Factorization via TruncatedSVD)**, and a **Hybrid Recommender**.
+A Machine Learning-based Movie Recommendation System that suggests relevant movies based on movie characteristics, user preferences, and rating patterns using Content-Based Filtering, Collaborative Filtering, and Hybrid Recommendation techniques.
 
 ---
 
 ## 📌 Project Overview
 
-Recommender systems are the algorithmic backbone of platforms like Netflix, Spotify, and YouTube.
+With thousands of movies available across different platforms, finding movies that match individual preferences can be challenging.
 
-This project delivers three distinct recommendation strategies:
-1. **Content-Based Filtering**: Recommends films with matching genres, themes, and metadata to a target movie using vector space similarity.
-2. **Collaborative Filtering**: Decomposes the sparse User-Item interaction matrix using **Truncated Singular Value Decomposition (SVD)** to uncover latent user preferences and predict personalized star ratings.
-3. **Hybrid Recommender**: Blends content similarity with user taste profiles to balance novelty, relevance, and user alignment.
+This project implements a recommendation engine using multiple Machine Learning techniques to generate relevant movie suggestions.
+
+The system explores three recommendation approaches:
+
+- **Content-Based Filtering:** Recommends movies based on genres, descriptions, keywords, and other movie attributes.
+- **Collaborative Filtering:** Recommends movies based on user rating patterns and similarities between users.
+- **Hybrid Recommendation:** Combines content-based and collaborative filtering to improve recommendation relevance.
+
+### Key Features
+
+- Movie dataset loading and preprocessing.
+- Movie metadata analysis and feature extraction.
+- TF-IDF-based text vectorization.
+- Cosine Similarity for movie-to-movie comparison.
+- SVD Matrix Factorization for collaborative recommendations.
+- Hybrid Recommendation Engine.
+- Personalized movie recommendation generation.
+- Modular and reusable architecture.
 
 ---
 
-## 📂 Architecture
+## 📂 Project Structure
 
-```
+```text
 movie_recommender/
+│
 ├── data/
-│   ├── download_movielens.py   # Automated downloader for MovieLens ml-latest-small
-│   ├── movies.csv              # Movie catalog (9,742 movies with genres)
-│   └── ratings.csv             # 100,836 ratings from 610 users
+│   ├── movies.csv
+│   └── ratings.csv
+│
 ├── notebooks/
-│   └── recommender_walkthrough.ipynb # Interactive Jupyter Notebook
+│   └── movie_analysis.ipynb
+│
 ├── src/
 │   ├── __init__.py
-│   ├── preprocess.py           # Ingestion, EDA, genre tokenization, title normalization
-│   ├── content_based.py        # TF-IDF Vectorization & Cosine Similarity engine
-│   ├── collaborative.py        # Sparse User-Item Matrix & TruncatedSVD Latent Factor model
-│   └── engine.py               # Unified Hybrid Recommender engine
+│   ├── preprocess.py
+│   ├── content_based.py
+│   ├── collaborative.py
+│   └── hybrid.py
+│
 ├── models/
-│   ├── content_engine.joblib   # Persisted Content-Based model
-│   └── collab_engine.joblib    # Persisted SVD Collaborative model
-├── README.md                   # Full documentation & equations
-└── main.py                     # CLI orchestrator & interactive recommender
+│   └── recommendation_model.pkl
+│
+├── requirements.txt
+├── README.md
+└── main.py
+```
+
+*Note: This is a suggested modular structure. Update filenames according to your actual repository implementation.*
+
+---
+
+## 📊 Dataset Information
+
+The recommendation system uses movie metadata and user-rating information to generate recommendations.
+
+### Dataset Components
+
+**1. Movies Dataset (`movies.csv`)**
+
+Contains information about movies, such as:
+
+- Movie ID
+- Movie Title
+- Genres
+- Movie Description
+- Keywords (if available)
+
+**2. Ratings Dataset (`ratings.csv`)**
+
+Contains user interaction information, such as:
+
+- User ID
+- Movie ID
+- Rating
+- Timestamp (if available)
+
+*The actual dataset fields depend on the dataset selected for implementation.*
+
+---
+
+## ⚙️ Technologies & Libraries
+
+| Technology | Purpose |
+|---|---|
+| Python | Core programming language |
+| Pandas | Data manipulation and analysis |
+| NumPy | Numerical computations |
+| Scikit-learn | Feature extraction and similarity calculation |
+| TF-IDF | Text feature representation |
+| Cosine Similarity | Measuring movie similarity |
+| Surprise | SVD-based collaborative filtering, if used |
+| Matplotlib | Data visualization |
+| Seaborn | Statistical visualization |
+| Pickle / Joblib | Model persistence |
+
+---
+
+## 🧠 Recommendation Algorithms
+
+### 1. Content-Based Filtering
+
+Content-Based Filtering recommends movies based on their characteristics and similarities with movies that a user likes.
+
+**Techniques Used:**
+
+- TF-IDF Vectorization
+- Movie Metadata Processing
+- Cosine Similarity
+
+**Working:**
+
+1. Extract movie information such as genres and descriptions.
+2. Combine relevant movie attributes into a feature representation.
+3. Convert textual information into numerical vectors using TF-IDF.
+4. Calculate similarity between movie vectors using Cosine Similarity.
+5. Recommend movies with the highest similarity scores.
+
+### 2. Collaborative Filtering
+
+Collaborative Filtering generates recommendations using user-rating patterns and preferences.
+
+**Technique: Singular Value Decomposition (SVD)**
+
+SVD is a Matrix Factorization technique that decomposes the user-item interaction matrix into lower-dimensional latent factor matrices.
+
+**Working:**
+
+1. Load user-movie rating information.
+2. Construct the user-item interaction matrix.
+3. Apply SVD-based matrix factorization.
+4. Learn latent representations of users and movies.
+5. Predict ratings for movies that users have not rated.
+6. Recommend movies with higher predicted ratings.
+
+### 3. Hybrid Recommendation Engine
+
+The Hybrid Recommendation Engine combines Content-Based Filtering and Collaborative Filtering.
+
+**Working:**
+
+1. Generate recommendations using Content-Based Filtering.
+2. Generate recommendations using Collaborative Filtering.
+3. Combine recommendation scores using a suitable weighting strategy.
+4. Rank the movies based on the combined scores.
+5. Return the most relevant movie recommendations.
+
+---
+
+## 🚀 Installation & Setup
+
+### 1. Clone the Repository
+
+```bash
+git clone <YOUR_REPOSITORY_URL>
+cd movie_recommender
+```
+
+### 2. Create a Virtual Environment
+
+**Windows:**
+
+```bash
+python -m venv venv
+venv\Scripts\activate
+```
+
+**Linux / macOS:**
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
+
+### 3. Install Dependencies
+
+```bash
+pip install -r requirements.txt
 ```
 
 ---
 
-## 📊 Dataset: MovieLens (GroupLens Research)
+## ▶️ How to Run
 
-- **Total Movies**: 9,742
-- **Total User Reviews**: 100,836
-- **Unique Users**: 610
-- **Rating Scale**: 0.5 to 5.0 stars
-- **Global Mean Rating**: 3.50 stars
+### Run the Complete Recommendation System
+
+```bash
+python main.py
+```
+
+The application executes the recommendation workflow:
+
+1. Load movie and rating datasets.
+2. Inspect and preprocess movie information.
+3. Extract movie features using TF-IDF.
+4. Calculate movie similarities using Cosine Similarity.
+5. Train the SVD-based collaborative filtering model.
+6. Generate content-based recommendations.
+7. Generate collaborative recommendations.
+8. Combine recommendations using the hybrid engine.
+
+### Run Individual Modules
+
+**Data Preprocessing**
+
+```bash
+python src/preprocess.py
+```
+
+**Content-Based Recommendation**
+
+```bash
+python src/content_based.py
+```
+
+**Collaborative Filtering**
+
+```bash
+python src/collaborative.py
+```
+
+**Hybrid Recommendation**
+
+```bash
+python src/hybrid.py
+```
 
 ---
 
-## 🚀 How to Run
+## 🔍 Sample Recommendation
 
-### 1. Run the Full Pipeline & Demo
-From the project root:
-```bash
-python movie_recommender/main.py
+**Example Input:**
+
+```text
+Movie Title: Toy Story (1995)
 ```
 
-### 2. Get Recommendations for a Movie (Content-Based)
-```bash
-python movie_recommender/main.py --movie "The Dark Knight"
+**Recommendation Output:**
+
+```text
+Recommended Movies:
+
+1. Toy Story 2 (1999)
+2. A Bug's Life (1998)
+3. Monsters, Inc. (2001)
+4. Finding Nemo (2003)
+5. Shrek (2001)
 ```
 
-### 3. Get Personalized Recommendations for a User (Collaborative)
-```bash
-python movie_recommender/main.py --user 1
-```
-
-### 4. Interactive Search Shell
-```bash
-python movie_recommender/main.py --interactive
-```
+*Illustrative example only. Actual recommendations depend on the selected dataset and model output.*
 
 ---
 
-## 🔬 Algorithms & Mathematical Concepts
+## 📈 Model Evaluation
 
-### 1. Content-Based Filtering (Cosine Similarity)
-Transforms genre lists and metadata into TF-IDF vector embeddings:
-$$\text{Cosine Similarity}(\mathbf{u}, \mathbf{v}) = \frac{\mathbf{u} \cdot \mathbf{v}}{\|\mathbf{u}\| \|\mathbf{v}\|}$$
+Recommendation systems require different evaluation metrics from traditional classification models.
 
-* **Sample Output (`Toy Story`)**:
-  - `Toy Story 2 (1999)`: 100.0% similarity
-  - `Toy Story 3 (2010)`: 91.67% similarity
-  - `Monsters, Inc. (2001)`: 41.57% similarity
+The following metrics can be used to evaluate recommendation quality:
 
-### 2. Collaborative Filtering (Matrix Factorization via SVD)
-The sparse User-Item rating matrix $R \in \mathbb{R}^{610 \times 9724}$ is centered and decomposed into rank-$k$ latent factors:
-$$R \approx U \cdot \Sigma \cdot V^T$$
+| Metric | Purpose |
+|---|---|
+| RMSE | Measures rating prediction error |
+| MAE | Measures average absolute prediction error |
+| Precision@K | Measures relevant recommendations among the top K results |
+| Recall@K | Measures how many relevant items are retrieved |
+| NDCG@K | Evaluates the quality of recommendation ranking |
 
-Each user $u$ and movie $m$ is represented as a dense latent vector $\mathbf{p}_u, \mathbf{q}_m \in \mathbb{R}^{25}$. The predicted rating for an unrated movie is:
-$$\hat{r}_{u, m} = \mu_u + \mathbf{p}_u \cdot \mathbf{q}_m^T$$
+### Comparison of Recommendation Approaches
 
-* **Sample Output (User #1 - Crime & Thriller Fan)**:
-  - Past Favorites: *Se7en* (5.0★), *The Usual Suspects* (5.0★), *Bottle Rocket* (5.0★)
-  - Top Recommendations:
-    1. *The Shawshank Redemption (1994)* — Predicted: 4.65 ★
-    2. *The Godfather (1972)* — Predicted: 4.65 ★
-    3. *Twelve Monkeys (1995)* — Predicted: 4.58 ★
-    4. *Trainspotting (1996)* — Predicted: 4.56 ★
+| Approach | Main Advantage | Limitation |
+|---|---|---|
+| Content-Based | Recommends similar movies using movie attributes | May produce less diverse recommendations |
+| Collaborative Filtering | Learns preferences from user-rating patterns | Suffers from cold-start problems |
+| Hybrid Recommendation | Combines multiple recommendation approaches | More complex to implement and tune |
 
-### 3. Hybrid Recommender
-Combines content relevance with personalized user affinity:
-$$\text{Score}_{\text{Hybrid}} = \alpha \cdot \text{Score}_{\text{Content}} + (1 - \alpha) \cdot \text{Score}_{\text{Collaborative}}$$
+*Actual evaluation scores should be added after running experiments on the selected dataset.*
+
+---
+
+## 🎯 Applications
+
+- Movie streaming platforms.
+- Personalized movie discovery.
+- Entertainment recommendation engines.
+- OTT platform recommendations.
+- User preference analysis.
+- Intelligent content filtering.
 
 ---
 
 ## 📝 What I Learned
 
-- [x] **Item-Feature vs. Behavioral-Feedback Paradigms**: Understood the fundamental differences and trade-offs between Content-Based and Collaborative Filtering.
-- [x] **Vector Space Modeling**: Implemented TF-IDF tokenization on multi-genre metadata and computed memory-efficient Cosine Similarity.
-- [x] **Handling Matrix Sparsity**: Constructed compressed sparse row (`scipy.sparse.csr_matrix`) matrices to efficiently process 100,000+ ratings with minimal memory footprint.
-- [x] **Latent Factor Modeling**: Applied TruncatedSVD to uncover hidden thematic dimensions in movie ratings.
-- [x] **Cold-Start Problem**: Designed hybrid blending to overcome cold-start limitations for new movies and users.
+- Understanding Recommendation System fundamentals.
+- Implementing Content-Based Filtering.
+- Applying TF-IDF for movie feature extraction.
+- Measuring similarity using Cosine Similarity.
+- Understanding Collaborative Filtering.
+- Implementing SVD Matrix Factorization.
+- Combining recommendation approaches using a Hybrid Engine.
+- Understanding cold-start problems.
+- Evaluating recommendation systems using ranking and prediction metrics.
+- Developing modular Machine Learning applications.
 
+---
+
+## 👨‍💻 Author & Acknowledgments
+
+- **Internship Program:** CODE-A-NOVA Technology Initiative
+- **Task:** Level 2(b) – Movie Recommendation System
+- **Domain:** Machine Learning & Recommender Systems
+- **Programming Language:** Python
+- **Repository:** CODE-A-NOVA Machine Learning Internship
+
+---
+
+*Developed as part of the CODE-A-NOVA Machine Learning Internship Program.*
